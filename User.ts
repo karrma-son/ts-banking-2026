@@ -1,4 +1,6 @@
 class User {
+    
+    
     constructor(
         private username: string,
         private password: string,
@@ -79,5 +81,13 @@ class User {
         return this.isRegistered;
     }
 
+    public displayUserInfo(){
+        console.log(`${this.username} ${this.firstName} ${this.lastName} ${this.balance}`)
+    }
+
 }
+
+
+const user1 = new User("Yohiho124", "asfasfa12", "Unc", "Man", "1255251", 2000 )
+user1.displayUserInfo();
 // const newUser1 = new User("Mason", "ASFASFA", 1230)
