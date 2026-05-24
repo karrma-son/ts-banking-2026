@@ -9,19 +9,22 @@ class Bank {
     //recieve User info?
     //create User object?
     //push User to userList?
+    //consistent return statements
 
     register(firstName: string, lastName: string, username: string, password: string) {
+
+
+        // guards for all arguments 
+
         const foundUser = this.usersList.some(
-            (user) => user.getUsername === username;
+            (user) => user.getUsername === username // true or false
         )
 
         if (foundUser) {
             return `${username} is already registered`;
         }
+
         const newUser = new User(firstName, lastName, username, password);
-
-
-
 
 
         newUser.setBalance = 1000;
@@ -33,9 +36,8 @@ class Bank {
         this.currentUser = newUser;
 
         return (`
-            ${this.currentUser.getUsername} has signed up}`
+            ${username} has signed up}`
         )
-
 
     }
 
@@ -55,22 +57,19 @@ class Bank {
         return this.currentUser.getIsLoggedIn; // could return true instead
     }
 
+    // must be loggedin to logout - isLoggedIn === true
+    
+    // if logged in - setIsLoggedIn === false
+
+
     logout() {
-        if (!this.currentUser) {
-            return;
+
+        if (this.currentUser){
+            this.currentUser.setIsLoggedIn === false;
+            this.currentUser = null;
         }
-
-        if (this.currentUser.getIsLoggedIn == false) {
-            console.log("Must be logged in before logging out");
-            return `${this.currentUser.getIsLoggedIn}`;
-        }
-
-        console.log(`${this.currentUser.getUsername} is logged in: ${this.currentUser.getIsLoggedIn}`)
-
-        this.currentUser.getIsLoggedIn == true ? this.currentUser.setIsLoggedIn = false : this.currentUser.setIsLoggedIn = true  // true??
-
-        return (`${this.currentUser.getUsername} is logged in: ${this.currentUser.getIsLoggedIn}`)
-
+       
+  
     }
 
 
