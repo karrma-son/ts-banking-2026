@@ -1,39 +1,80 @@
 class Bank {
 
     constructor(
-        private users: User[],
-        private username: User,
-        private password: User,
-        private currentUser: User,
-        private balance: number,
-
-
+        private usersList: User[],
+        public institution: string,
+        public currentUser: User | null,
     ) { };
 
+    //recieve User info?
+    //create User object?
+    //push User to userList?
 
+    register(firstName: string, lastName: string, username: string, password: string) {
+        const newUser = new User(firstName, lastName, username, password)
 
-    register(): string {
+        if (newUser.getIsRegistered == true) {
 
-        if (this.isRegistered == true) {
-            console.log(`${this.username} is already registered`)
+            return `${newUser.getUsername} is already registered`;
 
         } else {
-            this.balance += 1000;
-            this.loggedIn = true;
-            this.isRegistered = true;
+            let newBalance = newUser.setBalance = 1000;
+
+            newUser.setIsLoggedIn = true;
+            newUser.setIsRegistered = true;
+
+            this.usersList.push(newUser)
+            this.currentUser = newUser;
+
+            return (`
+            ${newUser.getUsername} has signed up with, 
+            a new balance of: $${newUser.getBalance},
+            and now logged in?: ${newUser.getIsLoggedIn}
+            and registered?: ${newUser.getIsRegistered}`
+            )
+
         }
 
-        return (`
-            ${this.username} has signed up with, 
-            a new balance of: $${this.balance},
-            and now logged in?: ${this.loggedIn}
-            and registered?: ${this.isRegistered}`
-        )
+
+    }
+
+    login(username: string, password: string) {
+
+
+        const foundUser = this.usersList.find(
+            (user) => user.getUsername === username && user.getPassword === password
+        );
+
+        if (!foundUser) {
+            console.log(`Username or password was not found`)
+            return false;
+        }
+        this.currentUser = foundUser;
+        this.currentUser.setIsLoggedIn === true;
+        return this.currentUser.getIsLoggedIn; // could return true instead
+    }
+
+    logout() {
+        if (!this.currentUser) {
+            return;
+        }
+
+        if (this.currentUser.getIsLoggedIn == false) {
+            console.log("Must be logged in before logging out");
+            return `${this.currentUser.getIsLoggedIn}`;
+        }
+
+        console.log(`${this.currentUser.getUsername} is logged in: ${this.currentUser.getIsLoggedIn}`)
+
+        this.currentUser.getIsLoggedIn == true ? this.currentUser.setIsLoggedIn = false : this.currentUser.setIsLoggedIn = true  // true??
+
+        return (`${this.currentUser.getUsername} is logged in: ${this.currentUser.getIsLoggedIn}`)
+
     }
 
 
     deposit(depositedAmount: number) {
-        if (this.loggedIn == false) {
+        if (this.currentUser?.getIsLoggedIn == false) {
             console.log('Cannot deposit if not signed in ');
             return;
         }
@@ -42,87 +83,71 @@ class Bank {
             return;
         }
 
+        if (!this.currentUser) {
+            return;
+        }
 
-        this.balance += depositedAmount
-        return this.balance;
+        const updatedBalance = this.currentUser.getBalance + depositedAmount;
+
+        this.currentUser.setBalance = updatedBalance
+        return this.currentUser.getBalance;
 
 
     }
 
     withdraw(withdrawAmount: number) {
-        if (this.loggedIn == false) {
+        if (!this.currentUser) {
+            return
+        }
+        if (this.currentUser.getIsLoggedIn == false) {
             console.log('Cannot withdraw if not signed in')
-            return this.balance;                                             //user must be signed in to see balance?
-        } else if (withdrawAmount > this.balance) {
+            return this.currentUser.getBalance;                                             //user must be signed in to see balance?
+        } else if (withdrawAmount > this.currentUser.getBalance) {
             console.log('Withdrawal ammount is more than total balance');
-            return this.balance;
+            return this.currentUser.getBalance;
         } else if (withdrawAmount <= 0) {
             console.log("Cannot withdraw $0")
 
         }
 
-        this.balance -= withdrawAmount
-        return this.balance
+        const updatedBalance = this.currentUser.getBalance - withdrawAmount;
+        this.currentUser.setBalance = updatedBalance
+        return this.currentUser.getBalance
     }
+
     // set guard clauses
     // set overdraft conditionals 
 
     getBalance() {
-        if (this.loggedIn == true) {
-            return this.balance
+
+        if (!this.currentUser) {
+            return;
         }
 
-        return (`${this.username} must log in to be able to see balance`)
+        if (this.currentUser?.getIsLoggedIn == true) {
+            return this.currentUser.getBalance
+        }
+
+        return (`${this.currentUser.getUsername} must log in to be able to see balance`)
     }
 
-    login(username: string, password: string) {
 
-        if (this.isRegistered == false) {
-            console.log("Must register before logging in")
-            return this.isRegistered;
-        }
-
-        if (this.loggedIn == true && this.isRegistered == true) {
-            console.log(`${this.username} is logged in: ${this.loggedIn}`)
-        }
-
-
-
-        if (this.loggedIn == true) {
-            console.log("User already logged in")
-            return this.loggedIn;
-        }
-
-        this.loggedIn = username === this.username && password === this.password;
-        return this.loggedIn;
-
-
-    }
-
-    logout() {
-        if (this.loggedIn == false) {
-            console.log("Must be logged in before logging out");
-            return `${this.loggedIn}`;
-        }
-
-        console.log(`${this.username} is logged in: ${this.loggedIn}`)
-
-        this.loggedIn == true ? this.loggedIn = false : this.loggedIn = true  // true??
-
-        return (`${this.username} is logged in: ${this.loggedIn}`)
-
-    }
 
     display() {
-        if (this.loggedIn == false) {
+        if (!this.currentUser) {
+            return;
+        }
+        if (this.currentUser.getIsLoggedIn == false) {
             return ("Must be signed in to display")
 
         } else {
-            return `${this.username} ${this.balance} ${this.loggedIn} `
+            return `${this.currentUser.getUsername} ${this.currentUser.getBalance} ${this.currentUser.getIsLoggedIn} `
         }
     }
 }
 
 
 
+
+const user1 = new User("Yohiho124", "asfasfa12", "Unc", "Man", "1255251", 2000)
 

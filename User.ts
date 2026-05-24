@@ -1,23 +1,24 @@
 class User {
     
     
-    constructor(
-        private username: string,
-        private password: string,
+    constructor(   
         private firstName: string,
         private lastName: string,
-        private accountNumber: string,
+        private username: string,
+        private password: string,
+     
+        private accountNumber?: string,
         private balance: number = 0,
         private isLoggedIn: boolean = false,
         private isRegistered: boolean = false,
 
     ) { };
 
-    public set setUserName(username: string) {
+    public set setUsername(username: string) {
         this.username = username;
     }
 
-    public get getUserName() {
+    public get getUsername() {
         return this.username;
     }
 
@@ -88,6 +89,5 @@ class User {
 }
 
 
-const user1 = new User("Yohiho124", "asfasfa12", "Unc", "Man", "1255251", 2000 )
-user1.displayUserInfo();
+// user1.displayUserInfo();
 // const newUser1 = new User("Mason", "ASFASFA", 1230)
