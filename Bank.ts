@@ -58,18 +58,17 @@ class Bank {
     }
 
     // must be loggedin to logout - isLoggedIn === true
-    
+
     // if logged in - setIsLoggedIn === false
 
 
     logout() {
-
-        if (this.currentUser){
-            this.currentUser.setIsLoggedIn === false;
-            this.currentUser = null;
+        if (this.currentUser?.getIsLoggedIn === true) {
+            
+             this.currentUser = null;
+            return false;
         }
-       
-  
+         
     }
 
 
