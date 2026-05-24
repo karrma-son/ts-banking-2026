@@ -11,29 +11,30 @@ class Bank {
     //push User to userList?
 
     register(firstName: string, lastName: string, username: string, password: string) {
-        const newUser = new User(firstName, lastName, username, password)
+        const foundUser = this.usersList.some(
+            (user) => user.getUsername === username;
+        )
 
-        if (newUser.getIsRegistered == true) {
-
-            return `${newUser.getUsername} is already registered`;
-
-        } else {
-            let newBalance = newUser.setBalance = 1000;
-
-            newUser.setIsLoggedIn = true;
-            newUser.setIsRegistered = true;
-
-            this.usersList.push(newUser)
-            this.currentUser = newUser;
-
-            return (`
-            ${newUser.getUsername} has signed up with, 
-            a new balance of: $${newUser.getBalance},
-            and now logged in?: ${newUser.getIsLoggedIn}
-            and registered?: ${newUser.getIsRegistered}`
-            )
-
+        if (foundUser) {
+            return `${username} is already registered`;
         }
+        const newUser = new User(firstName, lastName, username, password);
+
+
+
+
+
+        newUser.setBalance = 1000;
+
+        newUser.setIsRegistered = true;
+
+        this.usersList.push(newUser);
+
+        this.currentUser = newUser;
+
+        return (`
+            ${this.currentUser.getUsername} has signed up}`
+        )
 
 
     }
