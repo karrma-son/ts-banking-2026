@@ -31,9 +31,12 @@ class Bank {
 
         newUser.setIsRegistered = true;
 
+
         this.usersList.push(newUser);
 
         this.currentUser = newUser;
+
+        this.currentUser.setIsLoggedIn = true;
 
         return (`
             ${username} has signed up}`
@@ -53,8 +56,8 @@ class Bank {
             return false;
         }
         this.currentUser = foundUser;
-        this.currentUser.setIsLoggedIn === true;
-        return this.currentUser.getIsLoggedIn; // could return true instead
+        this.currentUser.setIsLoggedIn = true;
+        return this.currentUser.getIsLoggedIn; // could return true instead or return nothing?
     }
 
     // must be loggedin to logout - isLoggedIn === true
@@ -63,90 +66,68 @@ class Bank {
 
 
     logout() {
-        if (this.currentUser?.getIsLoggedIn === true) {
-            
-             this.currentUser = null;
-            return false;
+        if (this.currentUser === null || !this.currentUser.getIsLoggedIn) {  // !conditionally false 
+            return;
         }
-         
+        this.currentUser = null;
     }
 
+    // Do I need to return a boolean for deposit or withdraw?
 
     deposit(depositedAmount: number) {
-        if (this.currentUser?.getIsLoggedIn == false) {
+        if (this.currentUser === null || !this.currentUser.getIsLoggedIn) {         //current user null or not logged in 
             console.log('Cannot deposit if not signed in ');
-            return;
-        }
-        else if (depositedAmount <= 0) {
+            return false;
+        } else if (depositedAmount <= 0) {                       // user logged in but 0 deposit
             console.log('Cannot deposit 0 dollars or less')
-            return;
+            return false;
         }
 
-        if (!this.currentUser) {
-            return;
-        }
-
-        const updatedBalance = this.currentUser.getBalance + depositedAmount;
-
-        this.currentUser.setBalance = updatedBalance
-        return this.currentUser.getBalance;
-
-
+        this.currentUser.setBalance = this.currentUser.getBalance + depositedAmount;
+        return true;                                               // deposit true if it worked?
     }
 
     withdraw(withdrawAmount: number) {
-        if (!this.currentUser) {
-            return
-        }
-        if (this.currentUser.getIsLoggedIn == false) {
+        if (this.currentUser === null || !this.currentUser.getIsLoggedIn) {
             console.log('Cannot withdraw if not signed in')
-            return this.currentUser.getBalance;                                             //user must be signed in to see balance?
+            return false;                                            //user must be signed in to see balance?
         } else if (withdrawAmount > this.currentUser.getBalance) {
-            console.log('Withdrawal ammount is more than total balance');
-            return this.currentUser.getBalance;
+            console.log('Withdrawal ammount is more than total balance');  //overdraft?
+            return false;
         } else if (withdrawAmount <= 0) {
-            console.log("Cannot withdraw $0")
-
+            console.log("Cannot withdraw $0 or less")
+            return false;
         }
 
-        const updatedBalance = this.currentUser.getBalance - withdrawAmount;
-        this.currentUser.setBalance = updatedBalance
-        return this.currentUser.getBalance
+        this.currentUser.setBalance = this.currentUser.getBalance - withdrawAmount;
+        return true;
     }
 
     // set guard clauses
     // set overdraft conditionals 
 
     getBalance() {
-
-        if (!this.currentUser) {
-            return;
+        if (this.currentUser === null || !this.currentUser.getIsLoggedIn) {
+            return 0;
         }
-
-        if (this.currentUser?.getIsLoggedIn == true) {
-            return this.currentUser.getBalance
-        }
-
-        return (`${this.currentUser.getUsername} must log in to be able to see balance`)
+        return this.currentUser.getBalance;
     }
 
 
-
     display() {
-        if (!this.currentUser) {
-            return;
+        //updated balance??
+        if (this.currentUser === null || !this.currentUser.getIsLoggedIn) {
+          console.log("Must be signed in to display");
+          return;
         }
-        if (this.currentUser.getIsLoggedIn == false) {
-            return ("Must be signed in to display")
-
-        } else {
-            return `${this.currentUser.getUsername} ${this.currentUser.getBalance} ${this.currentUser.getIsLoggedIn} `
-        }
+        console.log(`
+            Username: ${this.currentUser.getUsername} 
+            Balance: ${this.currentUser.getBalance}  `
+        )
     }
 }
 
 
 
 
-const user1 = new User("Yohiho124", "asfasfa12", "Unc", "Man", "1255251", 2000)
 
