@@ -1,3 +1,4 @@
+import { User } from "./User";
 class Bank {
 
     constructor(
@@ -111,7 +112,7 @@ class Bank {
     // set guard clauses
     // set overdraft conditionals 
 
-    getBalance() {
+    balance() {
         if (this.currentUser === null || !this.currentUser.getIsLoggedIn) {
             return 0;
         }
