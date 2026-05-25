@@ -11,6 +11,11 @@ class Bank {
     //push User to userList?
     //consistent return statements
 
+    isCurrentSession(){                                                          //HELPER FUNCTION
+       return this.currentUser === null || !this.currentUser.getIsLoggedIn;
+    }
+
+
     register(firstName: string, lastName: string, username: string, password: string) {
 
 
@@ -66,7 +71,7 @@ class Bank {
 
 
     logout() {
-        if (this.currentUser === null || !this.currentUser.getIsLoggedIn) {  // !conditionally false 
+        if (this.isCurrentSession()) {  // !conditionally false ---- helper method
             return;
         }
         this.currentUser = null;
