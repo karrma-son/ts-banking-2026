@@ -1,11 +1,10 @@
-class BankMenu{
+export class BankMenu{
 
     startMenu(){
         console.log(`Start Menu`)
         console.log("A. Register")
         console.log("B. Login")
         console.log("C. Exit")
-        console.log("Please make a choice: ")
     }
 
     
