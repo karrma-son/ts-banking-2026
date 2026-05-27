@@ -1,5 +1,5 @@
 import { User } from "./User";
-class Bank {
+export class Bank {
 
     constructor(
         private usersList: User[],
@@ -36,7 +36,6 @@ class Bank {
         newUser.setBalance = 1000;
 
         newUser.setIsRegistered = true;
-
 
         this.usersList.push(newUser);
 

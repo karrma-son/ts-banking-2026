@@ -1,0 +1,28 @@
+{
+  "name": "banking-26",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000t\u0000s\u0000-\u0000b\u0000a\u0000n\u0000k\u0000i\u0000n\u0000g\u0000-\u00002\u00000\u00002\u00006\u0000\r\u0000 \u0000",
+  "main": "BankMenu.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/karrma-son/ts-banking-2026.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/karrma-son/ts-banking-2026/issues"
+  },
+  "homepage": "https://github.com/karrma-son/ts-banking-2026#readme",
+  "devDependencies": {
+    "@types/node": "^25.9.1",
+    "@types/prompt-sync": "^4.2.3"
+  },
+  "dependencies": {
+    "prompt-sync": "^4.2.0"
+  }
+}

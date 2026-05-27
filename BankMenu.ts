@@ -1,7 +1,7 @@
 class BankMenu{
 
     startMenu(){
-        console.log("Start Menu")
+        console.log(`Start Menu`)
         console.log("A. Register")
         console.log("B. Login")
         console.log("C. Exit")
@@ -18,9 +18,7 @@ class BankMenu{
         console.log("Please make a choice: ")
     }
 
-
     
 }
 
 const bank1 = new BankMenu();
-bank1.userMenu();
