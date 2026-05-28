@@ -1,9 +1,7 @@
 import * as readline from 'node:readline/promises';
 import { stdin as input, stdout as output } from 'node:process';
 import { BankMenu } from './BankMenu';
-import { Bank } from './Bank';
 
-const bank = new Bank(null)
 class Input {
     rl = readline.createInterface({ input, output });
     bankMenu = new BankMenu();
@@ -22,10 +20,28 @@ class Input {
                 console.log("Invalid choice")
             }
         }
-        this.rl.close();
         return answer;
         // input answers form these menus
 
+    }
+
+
+    async userMenuChoice() {
+
+        let answer = ""
+        let incorrectAnswer = answer !== "A" && answer !== "B" && answer !== "C" && answer !== "D"
+
+        while(incorrectAnswer){
+            this.bankMenu.userMenu();
+            answer = (await this.rl.question("Please make a choice: ")).toUpperCase();
+            incorrectAnswer = answer !== "A" && answer !== "B" && answer !== "C" && answer !== "D"
+
+            if(incorrectAnswer){
+                console.log("Invalid choice")
+            }
+        }
+        return answer;
+    
     }
 
 
@@ -34,7 +50,9 @@ class Input {
 async function test() {
     const newInput = new Input();
     const answer = await newInput.startMenuChoice();
+    const testAnswer = await newInput.userMenuChoice();
     console.log(answer);
+    console.log(testAnswer);
 }
 
 test();

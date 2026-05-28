@@ -14,7 +14,6 @@ export class BankMenu{
         console.log("B. Deposit");
         console.log("C. Withdraw");
         console.log("D. Logout");
-        console.log("Please make a choice: ")
     }
 
     
