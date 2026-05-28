@@ -1,10 +1,10 @@
 import { User } from "./User";
 export class Bank {
 
+    usersList : User[] = [];
     constructor(
-        private usersList: User[],
-        public institution: string,
         public currentUser: User | null,
+        public institution?: string,
     ) { };
 
     //recieve User info?
