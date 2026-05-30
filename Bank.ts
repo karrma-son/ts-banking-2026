@@ -13,7 +13,7 @@ export class Bank {
     //consistent return statements
 
     isCurrentSession(){                                                          //HELPER FUNCTION
-       return this.currentUser === null || !this.currentUser.getIsLoggedIn;
+       return this.currentUser !== null && this.currentUser.getIsLoggedIn;
     }
 
 
@@ -44,7 +44,7 @@ export class Bank {
         this.currentUser.setIsLoggedIn = true;
 
         return (`
-            ${username} has signed up}`
+            ${username} has signed up`
         )
 
     }
@@ -71,7 +71,7 @@ export class Bank {
 
 
     logout() {
-        if (this.isCurrentSession()) {  // !conditionally false ---- helper method
+        if (!this.isCurrentSession()) {  // !conditionally false ---- helper method
             return;
         }
         this.currentUser = null;

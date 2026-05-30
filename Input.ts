@@ -2,9 +2,9 @@
 import * as readline from 'node:readline/promises';
 import { stdin as input, stdout as output } from 'node:process';
 import { BankMenu } from './BankMenu';
-import { User } from './User';
 
-class Input {
+
+export class Input {
     rl = readline.createInterface({ input, output });
     bankMenu = new BankMenu();
 
@@ -15,7 +15,7 @@ class Input {
         // loop through a,b,c ask the same question if not the questions not answered with the selection?
         while (incorrectAnswer) {
             this.bankMenu.startMenu();
-            answer = (await this.rl.question('Please make a choice: ')).toUpperCase();
+            answer = (await this.rl.question('Please make a choice: ')).toUpperCase().trim();
             incorrectAnswer = answer !== "A" && answer !== "B" && answer !== "C";
 
             if (incorrectAnswer) {
@@ -104,12 +104,13 @@ class Input {
         }
 
         let valueInput = NaN;
-        let typeOfTransaction = type === "DEPOSIT" ? "deposit" : "withdraw"
+        let typeOfTransaction = type === "DEPOSIT" ? "deposit" : "withdraw";
+
         while (Number.isNaN(valueInput)) {
             valueInput = parseInt((await this.rl.question(`Enter a ${typeOfTransaction} amount: `)).trim());
 
             if (Number.isNaN(valueInput)) {
-                console.log("Invalid selection: Please enter a number")
+                console.log("Invalid selection: Please enter a number");
             }
         }
 
@@ -127,12 +128,11 @@ class Input {
 
 
 
-async function register() {
-    console.log("*** Register ***")
-    const newInput = new Input();
-    const deposit = await newInput.getValueInput("deposit")
-    console.log(deposit)
+// async function register() {
+//     console.log("*** Register ***")
+//     const newInput = new Input();
+//     const deposit = await newInput.getValueInput("deposit")
+//     console.log(deposit)
 
-}
+// }
 
-register();

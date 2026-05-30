@@ -1,7 +1,7 @@
 export class BankMenu{
 
     startMenu(){
-        console.log(`Start Menu`)
+        console.log(`*** Start Menu ***`)
         console.log("A. Register")
         console.log("B. Login")
         console.log("C. Exit")
@@ -9,7 +9,7 @@ export class BankMenu{
 
     
     userMenu(){
-        console.log("User Menu");
+        console.log("*** User Menu ***");
         console.log("A. Display Info");
         console.log("B. Deposit");
         console.log("C. Withdraw");
@@ -19,4 +19,3 @@ export class BankMenu{
     
 }
 
-const bank1 = new BankMenu();
