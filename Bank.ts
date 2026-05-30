@@ -27,7 +27,8 @@ export class Bank {
         )
 
         if (foundUser) {
-            return `${username} is already registered`;
+            console.log(`${username} is already registered`)
+            return false;
         }
 
         const newUser = new User(firstName, lastName, username, password);
@@ -43,9 +44,9 @@ export class Bank {
 
         this.currentUser.setIsLoggedIn = true;
 
-        return (`
-            ${username} has signed up`
-        )
+        console.log(`${username} has signed up`);
+        
+        return true;
 
     }
 

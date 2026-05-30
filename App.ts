@@ -1,51 +1,58 @@
-import { User } from "./User";
 import { Bank } from "./Bank";
 import { Input } from "./Input";
-import { start } from "node:repl";
 
 const bank = new Bank(null);
 const input = new Input();
 
-async function startMenu() {
+async function startProgram() {
     while (true) {
         const startMenuInput = await input.startMenuInput();
-
-        if (startMenuInput == "A") {
-            console.log("*** Registration ***");
-            let firstName = await input.getFirstNameInput();
-            let lastName = await input.getLastNameInput();
-            let username = await input.getUsernameInput();
-            let password = await input.getPasswordInput();
-
-
-            console.log(bank.register(firstName, lastName, username, password));
-
-
-
-        } else if (startMenuInput == "B") {
-            console.log("*** Login ***");
-
-            let username = await input.getUsernameInput();
-            let password = await input.getPasswordInput();
-
-            let loggedIn = bank.login(username, password);
-
-            if (loggedIn === true) {
-                console.log("User is logged in");
-            } else {
-                console.log("User has not logged in");
-            }
-
-
-        } else {
-            console.log("Exiting program...");
+        if (startMenuInput == "C") {
+            console.log("Exiting...")
             input.closeInput();
             break;
         }
 
-       await userMenu()
+        let canContinue = false;
+
+        if(startMenuInput == "A"){
+            canContinue = await register();
+        } else {
+            canContinue = await login();
+        }
+
+        if (canContinue) {
+            await userMenu();
+        }
     }
 
+}
+async function register() {
+    console.log("*** Registration ***");
+    let firstName = await input.getFirstNameInput();
+    let lastName = await input.getLastNameInput();
+    let username = await input.getUsernameInput();
+    let password = await input.getPasswordInput();
+
+
+    return bank.register(firstName, lastName, username, password);
+}
+
+async function login() {
+    console.log("*** Login ***");
+
+    let username = await input.getUsernameInput();
+    let password = await input.getPasswordInput();
+
+    let loggedIn = bank.login(username, password);
+
+    if (loggedIn === true) {
+        console.log("User is logged in");
+    } else {
+        console.log("User has not logged in");
+    }
+
+    return loggedIn;
 }
 
 async function userMenu() {
@@ -77,7 +84,6 @@ async function userMenu() {
 
 // must go through startMenu to get to userMenu
 
-startMenu()
-
+startProgram();
 
 
