@@ -13,17 +13,22 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/karrma-son/ts-banking-2026/issues"
   },
   "homepage": "https://github.com/karrma-son/ts-banking-2026#readme",
   "devDependencies": {
-    "@types/node": "^25.9.1",
+    "@types/node": "^25.9.5",
+    "@types/pg": "^8.21.0",
     "@types/prompt-sync": "^4.2.3",
-    "@types/readline-sync": "^1.4.8"
+    "@types/readline-sync": "^1.4.8",
+    "ts-node": "^10.9.2",
+    "typescript": "^7.0.2"
   },
   "dependencies": {
+    "dotenv": "^17.4.2",
+    "pg": "^8.22.0",
     "prompt-sync": "^4.2.0",
     "readline-sync": "^1.4.10"
   }
