@@ -1,19 +1,24 @@
-import { User } from "./User";
+import { User } from "./User.ts";
+import { inserts, loginRetrieval } from './src/Bank_Repo.ts'
 export class Bank {
-
-    usersList : User[] = [];
+    public currentUser: User | null;
+    public institution: string | undefined;
+    usersList: User[] = [];
     constructor(
-        public currentUser: User | null,
-        public institution?: string,
-    ) { };
+        currentUser: User | null,
+        institution?: string,
+    ) {
+        this.currentUser = currentUser;
+        this.institution = institution;
+    };
 
     //recieve User info?
     //create User object?
     //push User to userList?
     //consistent return statements
 
-    isCurrentSession(){                                                          //HELPER FUNCTION
-       return this.currentUser !== null && this.currentUser.getIsLoggedIn;
+    isCurrentSession() {                                                          //HELPER FUNCTION
+        return this.currentUser !== null && this.currentUser.getIsLoggedIn;
     }
 
 
@@ -38,24 +43,29 @@ export class Bank {
 
         newUser.setIsRegistered = true;
 
+        newUser.setAccountNumber = Math.floor(Math.random() * 1000)
+
         this.usersList.push(newUser);
+
+        inserts(newUser);
 
         this.currentUser = newUser;
 
         this.currentUser.setIsLoggedIn = true;
 
         console.log(`${username} has signed up`);
-        
+
         return true;
 
     }
 
-    login(username: string, password: string) {
-
+    async login(username: string, password: string) {
 
         const foundUser = this.usersList.find(
             (user) => user.getUsername === username && user.getPassword === password
         );
+
+        // const foundUser = await loginRetrieval(username, password)
 
         if (!foundUser) {
             console.log(`Username or password was not found`)
@@ -123,8 +133,8 @@ export class Bank {
     display() {
         //updated balance??
         if (this.currentUser === null || !this.currentUser.getIsLoggedIn) {
-          console.log("Must be signed in to display");
-          return;
+            console.log("Must be signed in to display");
+            return;
         }
         console.log(`
             Username: ${this.currentUser.getUsername} 

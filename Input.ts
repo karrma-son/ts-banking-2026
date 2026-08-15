@@ -1,7 +1,7 @@
 // import readlineSync from 'readline-sync';
 import * as readline from 'node:readline/promises';
 import { stdin as input, stdout as output } from 'node:process';
-import { BankMenu } from './BankMenu';
+import { BankMenu } from './BankMenu.ts';
 
 
 export class Input {

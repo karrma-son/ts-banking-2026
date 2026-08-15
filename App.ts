@@ -1,5 +1,5 @@
-import { Bank } from "./Bank";
-import { Input } from "./Input";
+import { Bank } from "./Bank.ts";
+import { Input } from "./Input.ts";
 
 const bank = new Bank(null);
 const input = new Input();
