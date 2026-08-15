@@ -1,0 +1,11 @@
+Register - INSERT INTO users(first_name, last_name, username, user_password, account_number, balance)
+
+Login - SELECT * FROM users WHERE username = $1 and user_password = $2;
+
+Deposit - UPDATE users SET balance = balance + $1 WHERE user_id = $2;
+
+Withdrawal - UPDATE users SET balance = balance - $1 WHERE user_id = $2; 
+
+Balance - SELECT balance FROM users WHERE user_id = $1;
+
+Display - SELECT username, balance FROM users WHERE username = $1 and user_id = $2;

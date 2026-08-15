@@ -7,7 +7,7 @@ export class User {
         private username: string,
         private password: string,
      
-        private accountNumber?: string,
+        private accountNumber?: number,
         private balance: number = 0,
         private isLoggedIn: boolean = false,
         private isRegistered: boolean = false,
@@ -50,7 +50,7 @@ export class User {
         return `${this.firstName}  ${this.lastName}`;
     }
 
-    public set setAccountNumber(accountNumber: string) {
+    public set setAccountNumber(accountNumber: number) {
         this.accountNumber = accountNumber;
     }
 

@@ -8,7 +8,7 @@ CREATE TABLE users (
     last_name VARCHAR(100) NOT NULL,
     username VARCHAR(50) NOT NULL UNIQUE,
     user_password VARCHAR(50) NOT NULL,
-    account_number VARCHAR(8) NOT NULL UNIQUE,
+    account_number INT(8) NOT NULL UNIQUE,
     balance DECIMAL(10, 2) NOT NULL
 );
 

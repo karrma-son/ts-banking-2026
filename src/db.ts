@@ -21,4 +21,11 @@ export const query = async <T extends object = any>(
       return res;
 };
 
+// export  function insertUser(  text: string, params?: any[]): Promise <any> {
+//     const queryText = 
+
+    
+
+// }
+
 export default pool;
