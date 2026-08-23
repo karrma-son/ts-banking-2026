@@ -44,7 +44,7 @@ async function login() {
     let username = await input.getUsernameInput();
     let password = await input.getPasswordInput();
 
-    let loggedIn = bank.login(username, password);
+    let loggedIn =  await bank.login(username, password);
 
     if (loggedIn === true) {
         console.log("User is logged in");
@@ -62,11 +62,14 @@ async function userMenu() {
         if (userMenu == "A") {
             console.log("*** User Info ***");
             bank.display();
-        } else if (userMenu == "B") {
+        }  else if (userMenu == "B") {
+            console.log("*** BALANCE ***");
+            bank.balance()
+        } else if (userMenu == "C") {
             console.log("*** Deposit ***");
             let depositValue = await input.getDepositInput();
             bank.deposit(depositValue);
-        } else if (userMenu == "C") {
+        } else if (userMenu == "D") {
             console.log("*** Withdraw ***");
             let withdrawValue = await input.getWithdrawInput();
             bank.withdraw(withdrawValue);

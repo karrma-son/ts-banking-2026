@@ -30,12 +30,12 @@ export class Input {
     async userMenuInput() {
 
         let answer = ""
-        let incorrectAnswer = answer !== "A" && answer !== "B" && answer !== "C" && answer !== "D"
+        let incorrectAnswer = answer !== "A" && answer !== "B" && answer !== "C" && answer !== "D" && answer !== "E"
 
         while (incorrectAnswer) {
             this.bankMenu.userMenu();
             answer = (await this.rl.question("Please make a choice: ")).toUpperCase();
-            incorrectAnswer = answer !== "A" && answer !== "B" && answer !== "C" && answer !== "D"
+            incorrectAnswer = answer !== "A" && answer !== "B" && answer !== "C" && answer !== "D" && answer !== "E"
 
             if (incorrectAnswer) {
                 console.log("Invalid choice")
@@ -69,10 +69,10 @@ export class Input {
     async getDepositInput() {
         let depositInput = NaN;
 
-        while (Number.isNaN(depositInput)) {
-            depositInput = parseInt((await this.rl.question("Enter a deposit amount: ")).trim());
+        while (isNaN(depositInput)) {
+            depositInput = parseFloat((await this.rl.question("Enter a deposit amount: ")).trim());
 
-            if (Number.isNaN(depositInput)) {
+            if (isNaN(depositInput)) {
                 console.log("Invalid selection: Please enter a number")
             }
         }
@@ -84,10 +84,10 @@ export class Input {
     async getWithdrawInput() {
         let withdrawInput = NaN;
 
-        while (Number.isNaN(withdrawInput)) {
-            withdrawInput = parseInt((await this.rl.question("Enter a withdraw amount: ")).trim());
+        while (isNaN(withdrawInput)) {
+            withdrawInput = parseFloat((await this.rl.question("Enter a withdraw amount: ")).trim());
 
-            if (Number.isNaN(withdrawInput)) {
+            if (isNaN(withdrawInput)) {
                 console.log("Invalid selection: Please enter a number")
             }
         }
@@ -106,10 +106,10 @@ export class Input {
         let valueInput = NaN;
         let typeOfTransaction = type === "DEPOSIT" ? "deposit" : "withdraw";
 
-        while (Number.isNaN(valueInput)) {
-            valueInput = parseInt((await this.rl.question(`Enter a ${typeOfTransaction} amount: `)).trim());
+        while (isNaN(valueInput)) {
+            valueInput = parseFloat((await this.rl.question(`Enter a ${typeOfTransaction} amount: `)).trim());
 
-            if (Number.isNaN(valueInput)) {
+            if (isNaN(valueInput)) {
                 console.log("Invalid selection: Please enter a number");
             }
         }

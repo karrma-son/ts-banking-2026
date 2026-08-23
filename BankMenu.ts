@@ -10,10 +10,11 @@ export class BankMenu{
     
     userMenu(){
         console.log("*** User Menu ***");
-        console.log("A. Display Info");
-        console.log("B. Deposit");
-        console.log("C. Withdraw");
-        console.log("D. Logout");
+        console.log("A. Account Information");
+        console.log("B. Balance");
+        console.log("C. Deposit");
+        console.log("D. Withdraw");
+        console.log("E. Logout");
     }
 
     

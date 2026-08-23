@@ -1,21 +1,25 @@
 export class User {
-        private firstName: string;
-        private lastName: string;
-        private username: string;
-        private password: string;
 
-        private accountNumber?: number;
-        private balance: number = 0;
-        private isLoggedIn: boolean = false;
-        private isRegistered: boolean = false;
+    private firstName: string;
+    private lastName: string;
+    private username: string;
+    private password: string;
+
+    private userID?: number |undefined;
+    private accountNumber?: number;
+    private balance: number = 0;
+    private isLoggedIn: boolean = false;
+    private isRegistered: boolean = false;
 
     constructor(
+
         firstName: string,
         lastName: string,
         username: string,
         password: string,
-
-        accountNumber?: number,
+        
+        userID?: number,
+        accountNumber?: number|undefined,
         balance: number = 0,
         isLoggedIn: boolean = false,
         isRegistered: boolean = false,
@@ -26,12 +30,18 @@ export class User {
         this.username = username;
         this.password = password;
 
+        this.userID = userID;
+
         this.accountNumber = accountNumber;
         this.balance = balance;
         this.isLoggedIn = isLoggedIn;
         this.isRegistered = isRegistered;
 
     };
+
+    public get getUserID() {
+        return this.userID
+    }
 
     public set setUsername(username: string) {
         this.username = username;

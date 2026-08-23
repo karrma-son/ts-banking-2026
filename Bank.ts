@@ -1,11 +1,11 @@
 import { User } from "./User.ts";
-import { inserts, loginRetrieval } from './src/Bank_Repo.ts'
+import { registerUser, loginRetrieval, depositFunds, withdrawFunds, balanceRetrieval} from './src/Bank_Repo.ts'
 export class Bank {
     public currentUser: User | null;
     public institution: string | undefined;
     usersList: User[] = [];
     constructor(
-        currentUser: User | null,
+        currentUser: User,
         institution?: string,
     ) {
         this.currentUser = currentUser;
@@ -22,11 +22,12 @@ export class Bank {
     }
 
 
-    register(firstName: string, lastName: string, username: string, password: string) {
+    async register(firstName: string, lastName: string, username: string, password: string) {
 
 
         // guards for all arguments 
 
+        
         const foundUser = this.usersList.some(
             (user) => user.getUsername === username // true or false
         )
@@ -45,9 +46,9 @@ export class Bank {
 
         newUser.setAccountNumber = Math.floor(Math.random() * 1000)
 
-        this.usersList.push(newUser);
+        // this.usersList.push(newUser);
 
-        inserts(newUser);
+        await registerUser(newUser);
 
         this.currentUser = newUser;
 
@@ -61,11 +62,11 @@ export class Bank {
 
     async login(username: string, password: string) {
 
-        const foundUser = this.usersList.find(
-            (user) => user.getUsername === username && user.getPassword === password
-        );
+        // const foundUser = this.usersList.find(
+        //     (user) => user.getUsername === username && user.getPassword === password
+        // );
 
-        // const foundUser = await loginRetrieval(username, password)
+        const foundUser = await loginRetrieval(username, password)
 
         if (!foundUser) {
             console.log(`Username or password was not found`)
@@ -90,7 +91,7 @@ export class Bank {
 
     // Do I need to return a boolean for deposit or withdraw?
 
-    deposit(depositedAmount: number) {
+    async deposit(depositedAmount: number) {
         if (this.currentUser === null || !this.currentUser.getIsLoggedIn) {         //current user null or not logged in 
             console.log('Cannot deposit if not signed in ');
             return false;
@@ -98,12 +99,13 @@ export class Bank {
             console.log('Cannot deposit 0 dollars or less')
             return false;
         }
-
-        this.currentUser.setBalance = this.currentUser.getBalance + depositedAmount;
+        const id = this.currentUser.getUserID;
+        const result = await depositFunds(depositedAmount, id);
+        this.currentUser.setBalance = result;
         return true;                                               // deposit true if it worked?
     }
 
-    withdraw(withdrawAmount: number) {
+    async withdraw(withdrawAmount: number) {
         if (this.currentUser === null || !this.currentUser.getIsLoggedIn) {
             console.log('Cannot withdraw if not signed in')
             return false;                                            //user must be signed in to see balance?
@@ -114,19 +116,23 @@ export class Bank {
             console.log("Cannot withdraw $0 or less")
             return false;
         }
-
-        this.currentUser.setBalance = this.currentUser.getBalance - withdrawAmount;
+        const id = this.currentUser.getUserID;
+        const result = await withdrawFunds(withdrawAmount, id);
+        this.currentUser.setBalance = result;
         return true;
     }
 
     // set guard clauses
     // set overdraft conditionals 
 
-    balance() {
+    async balance() {
         if (this.currentUser === null || !this.currentUser.getIsLoggedIn) {
             return 0;
         }
-        return this.currentUser.getBalance;
+
+        // const id = this.currentUser.getUserID;
+        // await balanceRetrieval(id);
+        console.log(`Balance: $${this.currentUser.getBalance}`)
     }
 
 
@@ -138,7 +144,7 @@ export class Bank {
         }
         console.log(`
             Username: ${this.currentUser.getUsername} 
-            Balance: ${this.currentUser.getBalance}  `
+            Account Number: ${this.currentUser.getAccountNumber}`
         )
     }
 }
