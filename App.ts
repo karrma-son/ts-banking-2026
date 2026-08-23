@@ -68,11 +68,11 @@ async function userMenu() {
         } else if (userMenu == "C") {
             console.log("*** Deposit ***");
             let depositValue = await input.getDepositInput();
-            bank.deposit(depositValue);
+            await bank.deposit(depositValue);
         } else if (userMenu == "D") {
             console.log("*** Withdraw ***");
             let withdrawValue = await input.getWithdrawInput();
-            bank.withdraw(withdrawValue);
+            await bank.withdraw(withdrawValue);
         } else {
             console.log("Logging out...");
             bank.logout();

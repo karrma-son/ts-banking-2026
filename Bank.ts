@@ -37,7 +37,7 @@ export class Bank {
             return false;
         }
 
-        const newUser = new User(firstName, lastName, username, password);
+       let newUser = new User(firstName, lastName, username, password);
 
 
         newUser.setBalance = 1000;
@@ -48,9 +48,16 @@ export class Bank {
 
         // this.usersList.push(newUser);
 
-        await registerUser(newUser);
+        const registeredUser = await registerUser(newUser);
 
-        this.currentUser = newUser;
+        if(registeredUser === undefined){
+            console.log("ERROR: An error happened while registering")
+            console.log("Please try again!")
+            console.log('')
+            return false;
+
+        }
+        this.currentUser = registeredUser;
 
         this.currentUser.setIsLoggedIn = true;
 
@@ -67,8 +74,10 @@ export class Bank {
         // );
 
         const foundUser = await loginRetrieval(username, password)
+        
+        // console.log("FOUND USER", foundUser.getUsername)
 
-        if (!foundUser) {
+        if (foundUser === undefined) {
             console.log(`Username or password was not found`)
             return false;
         }
@@ -92,6 +101,8 @@ export class Bank {
     // Do I need to return a boolean for deposit or withdraw?
 
     async deposit(depositedAmount: number) {
+
+        
         if (this.currentUser === null || !this.currentUser.getIsLoggedIn) {         //current user null or not logged in 
             console.log('Cannot deposit if not signed in ');
             return false;
@@ -99,8 +110,15 @@ export class Bank {
             console.log('Cannot deposit 0 dollars or less')
             return false;
         }
+
         const id = this.currentUser.getUserID;
         const result = await depositFunds(depositedAmount, id);
+
+        if(result === undefined){
+            console.log("ERROR: Deposit is currently unvailable due to an error!");
+            console.log('')
+            return false;
+        }
         this.currentUser.setBalance = result;
         return true;                                               // deposit true if it worked?
     }

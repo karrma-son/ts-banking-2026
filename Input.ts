@@ -76,7 +76,7 @@ export class Input {
                 console.log("Invalid selection: Please enter a number")
             }
         }
-
+        
         return depositInput;
     }
 
