@@ -28,7 +28,7 @@ export async function registerUser(user: User) {
 
 export async function loginRetrieval(username: string, password: string) {
     try {
-        const res = await query(`SELECT * FROM users WHERE username = $1 and user_password = $2;`, [username, password])
+        const res = await query(`SELECT * FROM users WHERE LOWER(username) = LOWER($1) and user_password = $2;`, [username, password])
         const resultObject = res.rows[0];
 
 
@@ -69,17 +69,15 @@ export async function withdrawFunds(withdrawAmount: number, id: number) {
 
 }
 
-
-export async function balanceRetrieval(id: number) {
-    await query(`SELECT balance from user_id = $1;`, [id])
-
-}
-
-export async function displayInfo(id: number) {
-    await query(`SELECT username, account_number FROM users WHERE user_id = $1;`, [id])
-}
-
 export async function findUser(username: string) {
-    await query(`SELECT username FROM users WHERE username = $1;`, [username])
+    try {
+        const res = await query(`SELECT username FROM users WHERE LOWER(username) = LOWER($1);`, [username])
+        return res.rows[0]?.username ?? null;
+
+    } catch (error) {
+        console.log('')
+        console.error("ERROR:", error.message)
+        return undefined;
+    }
 
 }

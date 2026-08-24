@@ -1,5 +1,5 @@
 import { User } from "./User.ts";
-import { registerUser, loginRetrieval, depositFunds, withdrawFunds, balanceRetrieval} from './src/Bank_Repo.ts'
+import { registerUser, loginRetrieval, depositFunds, withdrawFunds, findUser } from './src/Bank_Repo.ts'
 export class Bank {
     public currentUser: User | null;
     public institution: string | undefined;
@@ -27,17 +27,26 @@ export class Bank {
 
         // guards for all arguments 
 
-        
-        const foundUser = this.usersList.some(
-            (user) => user.getUsername === username // true or false
-        )
 
-        if (foundUser) {
-            console.log(`${username} is already registered`)
+        const foundUser = await findUser(username);
+
+        if (foundUser === undefined) {
+            console.log(`
+                Registration currently unavailable: 
+                    please try again.
+                `);
             return false;
         }
 
-       let newUser = new User(firstName, lastName, username, password);
+        if (foundUser) {
+            console.log(`
+                The username ${username} is already registered:
+                 Please provide a different username.
+                `)
+            return false;
+        }
+
+        let newUser = new User(firstName, lastName, username, password);
 
 
         newUser.setBalance = 1000;
@@ -50,7 +59,7 @@ export class Bank {
 
         const registeredUser = await registerUser(newUser);
 
-        if(registeredUser === undefined){
+        if (registeredUser === undefined) {
             console.log("ERROR: An error happened while registering")
             console.log("Please try again!")
             console.log('')
@@ -74,7 +83,7 @@ export class Bank {
         // );
 
         const foundUser = await loginRetrieval(username, password)
-        
+
         // console.log("FOUND USER", foundUser.getUsername)
 
         if (foundUser === undefined) {
@@ -83,6 +92,8 @@ export class Bank {
         }
         this.currentUser = foundUser;
         this.currentUser.setIsLoggedIn = true;
+        console.log(`
+                Welcome ${this.currentUser.getFirstName}!`)
         return this.currentUser.getIsLoggedIn; // could return true instead or return nothing?
     }
 
@@ -102,7 +113,7 @@ export class Bank {
 
     async deposit(depositedAmount: number) {
 
-        
+
         if (this.currentUser === null || !this.currentUser.getIsLoggedIn) {         //current user null or not logged in 
             console.log('Cannot deposit if not signed in ');
             return false;
@@ -114,7 +125,7 @@ export class Bank {
         const id = this.currentUser.getUserID;
         const result = await depositFunds(depositedAmount, id);
 
-        if(result === undefined){
+        if (result === undefined) {
             console.log("ERROR: Deposit is currently unvailable due to an error!");
             console.log('')
             return false;
@@ -162,8 +173,8 @@ export class Bank {
         }
         console.log(`
             Username: ${this.currentUser.getUsername} 
-            Account Number: ${this.currentUser.getAccountNumber}`
-        )
+            Account Number: ${this.currentUser.getAccountNumber}
+            `)
     }
 }
 

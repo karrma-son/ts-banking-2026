@@ -8,7 +8,10 @@ async function startProgram() {
     while (true) {
         const startMenuInput = await input.startMenuInput();
         if (startMenuInput == "C") {
-            console.log("Exiting...")
+            console.log(`
+            Thank you for choosing our service!
+                    Exiting...
+                `)
             input.closeInput();
             break;
         }
@@ -43,11 +46,12 @@ async function login() {
 
     let username = await input.getUsernameInput();
     let password = await input.getPasswordInput();
-
     let loggedIn =  await bank.login(username, password);
 
     if (loggedIn === true) {
-        console.log("User is logged in");
+        console.log(`
+            ${username} is now logged in
+            `);
     } else {
         console.log("User has not logged in");
     }
@@ -74,7 +78,9 @@ async function userMenu() {
             let withdrawValue = await input.getWithdrawInput();
             await bank.withdraw(withdrawValue);
         } else {
-            console.log("Logging out...");
+            console.log(`
+                Logging out...
+                `);
             bank.logout();
             break;
         }

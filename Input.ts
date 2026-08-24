@@ -19,7 +19,11 @@ export class Input {
             incorrectAnswer = answer !== "A" && answer !== "B" && answer !== "C";
 
             if (incorrectAnswer) {
-                console.log("Invalid choice")
+                console.log(`
+                    Invalid selection:
+                Please select A, B, or C
+                `)
+
             }
         }
 
@@ -38,7 +42,11 @@ export class Input {
             incorrectAnswer = answer !== "A" && answer !== "B" && answer !== "C" && answer !== "D" && answer !== "E"
 
             if (incorrectAnswer) {
-                console.log("Invalid choice")
+                console.log(`
+                    Invalid selection:
+                Please select A, B, C, D, or E
+                `)
+
             }
         }
         return answer;
@@ -56,7 +64,7 @@ export class Input {
     }
 
     async getUsernameInput() {
-        const username = (await this.rl.question("Please enter a username: ")).trim();
+        const username = (await this.rl.question("Please enter a username: ")).trim()
         return username;
     }
 
@@ -73,10 +81,13 @@ export class Input {
             depositInput = parseFloat((await this.rl.question("Enter a deposit amount: ")).trim());
 
             if (isNaN(depositInput)) {
-                console.log("Invalid selection: Please enter a number")
+                console.log(`
+                  Invalid selection: 
+                Please enter a number
+                `)
             }
         }
-        
+
         return depositInput;
     }
 
@@ -88,35 +99,15 @@ export class Input {
             withdrawInput = parseFloat((await this.rl.question("Enter a withdraw amount: ")).trim());
 
             if (isNaN(withdrawInput)) {
-                console.log("Invalid selection: Please enter a number")
+                console.log(`
+                  Invalid selection: 
+                Please enter a number
+                `)
             }
         }
 
         return withdrawInput;
     }
-
-
-    async getValueInput(type: string) {
-        type = type.trim().toUpperCase();
-        if(type !== "DEPOSIT" && type !== "WITHDRAW"){
-            console.log("Invalid selection type: ")
-            return 0;
-        }
-
-        let valueInput = NaN;
-        let typeOfTransaction = type === "DEPOSIT" ? "deposit" : "withdraw";
-
-        while (isNaN(valueInput)) {
-            valueInput = parseFloat((await this.rl.question(`Enter a ${typeOfTransaction} amount: `)).trim());
-
-            if (isNaN(valueInput)) {
-                console.log("Invalid selection: Please enter a number");
-            }
-        }
-
-        return valueInput;
-    }
-    // only numbers for account and balances
 
     closeInput() {
         this.rl.close()
@@ -124,15 +115,4 @@ export class Input {
 
 
 }
-
-
-
-
-// async function register() {
-//     console.log("*** Register ***")
-//     const newInput = new Input();
-//     const deposit = await newInput.getValueInput("deposit")
-//     console.log(deposit)
-
-// }
 
